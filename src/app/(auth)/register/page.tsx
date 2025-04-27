@@ -1,14 +1,14 @@
-// import { redirect } from "next/navigation";
+import { redirect } from "next/navigation";
+
 import { GalleryVerticalEnd } from "lucide-react";
 
 import { RegisterForm } from "@/components/auth/register-form";
-
-// import { authClient } from "@/lib/auth-client";
+import { authClient } from "@/lib/auth-client";
 
 export default async function Register() {
-  /*if (await authClient.getSession()) {
+  if (await authClient.getSession()) {
     redirect("/");
-  }*/
+  }
   return (
     <div className="bg-muted flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
       <div className="flex w-full max-w-sm flex-col gap-6">

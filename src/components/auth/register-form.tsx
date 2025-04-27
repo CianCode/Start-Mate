@@ -49,8 +49,12 @@ export function RegisterForm({
           //show loading
           setIsSubmitting(true);
         },
-        onSuccess: () => {
+        onSuccess: async () => {
           setIsSubmitting(false);
+          await authClient.emailOtp.sendVerificationOtp({
+            email: data.email,
+            type: "email-verification", // or "sign-in", "forget-password"
+          });
           reset();
         },
         onError: (ctx) => {
