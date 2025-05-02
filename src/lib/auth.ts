@@ -4,8 +4,7 @@ import { emailOTP } from "better-auth/plugins";
 
 import { db } from "@/db";
 import * as schema from "@/db/schema";
-import VerificationEmail from "@/emails/verification-email";
-import { resend } from "@/lib/resend";
+import { EmailService, EmailType } from "@/lib/resend";
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
@@ -18,39 +17,38 @@ export const auth = betterAuth({
   plugins: [
     emailOTP({
       async sendVerificationOTP({ email, otp, type }) {
-        const fromEmail = process.env.RESEND_FROM_EMAIL || "auth@startmate.dev";
-
         try {
-          if (type === "sign-in") {
-            await resend.emails.send({
-              from: `Start Mate <${fromEmail}>`,
-              to: [email],
-              subject: "Sign-in verification code",
-              react: VerificationEmail({
-                name: email,
-                otp,
-              }),
-            });
-          } else if (type === "email-verification") {
-            await resend.emails.send({
-              from: `Start Mate <${fromEmail}>`,
-              to: [email],
-              subject: "Verify your email address",
-              react: VerificationEmail({
-                name: email,
-                otp,
-              }),
-            });
-          } else if (type === "forget-password") {
-            await resend.emails.send({
-              from: `Start Mate <${fromEmail}>`,
-              to: [email],
-              subject: "Reset your password",
-              react: VerificationEmail({
-                name: email,
-                otp,
-              }),
-            });
+          // Map Better Auth type to our EmailService type
+          let emailType: EmailType;
+
+          switch (type) {
+            case "sign-in":
+              emailType = "signin";
+              break;
+            case "email-verification":
+              emailType = "verification";
+              break;
+            case "forget-password":
+              emailType = "reset-password";
+              break;
+            default:
+              console.error(`Unsupported email type: ${type}`);
+              return;
+          }
+
+          // Extract name from email (can be replaced with actual username lookup if needed)
+          const name = email.split("@")[0];
+
+          // Send the email using our email service
+          const result = await EmailService.sendEmail(emailType, {
+            to: email,
+            name,
+            otp,
+          });
+
+          if (!result.success) {
+            console.error(result.error || `Failed to send email for ${type}`);
+            return;
           }
 
           console.log(`Email sent successfully to ${email} for ${type}`);

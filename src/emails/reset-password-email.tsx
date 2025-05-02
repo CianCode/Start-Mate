@@ -17,19 +17,19 @@ import {
   textStyle,
 } from "./shared";
 
-interface VerificationEmailProps {
+interface ResetPasswordEmailProps {
   name?: string;
   otp: string;
 }
 
-export const VerificationEmail = ({
+export const ResetPasswordEmail = ({
   name = "User",
   otp,
-}: VerificationEmailProps) => {
+}: ResetPasswordEmailProps) => {
   return (
     <Html>
       <Head />
-      <Preview>Verify your email address for Start Mate</Preview>
+      <Preview>Reset Your Start Mate Password</Preview>
       <EmailLayout>
         <Heading
           style={{
@@ -40,14 +40,14 @@ export const VerificationEmail = ({
             color: "#333",
           }}
         >
-          Email Verification
+          Password Reset
         </Heading>
 
         <Section>
           <Text style={textStyle}>Hello {name},</Text>
           <Text style={textStyle}>
-            Thank you for registering with Start Mate. Please use the
-            verification code below to complete your registration:
+            We received a request to reset your password for Start Mate. Please
+            use the code below to reset your password:
           </Text>
 
           <Section style={codeContainerStyle}>
@@ -65,7 +65,9 @@ export const VerificationEmail = ({
               fontStyle: "italic",
             }}
           >
-            If you didn&#39;t request this code, please ignore this email.
+            If you didn&#39;t request a password reset, please ignore this email
+            or contact support if you&#39;re concerned about your account&#39;s
+            security.
           </Text>
         </Section>
       </EmailLayout>
@@ -73,4 +75,4 @@ export const VerificationEmail = ({
   );
 };
 
-export default VerificationEmail;
+export default ResetPasswordEmail;
