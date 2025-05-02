@@ -1,12 +1,9 @@
-// import { redirect } from "next/navigation";
 import { GalleryVerticalEnd } from "lucide-react";
 
 import { LoginForm } from "@/components/auth/login-form";
 
-// import { authClient } from "@/lib/auth-client";
-
 export default async function Register() {
-  /*if (await authClient.getSession()) {
+  /*  if (await authClient.getSession()) {
     redirect("/");
   }*/
   return (

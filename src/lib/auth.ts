@@ -17,12 +17,11 @@ export const auth = betterAuth({
     emailOTP({
       async sendVerificationOTP({ email, otp, type }) {
         if (type === "sign-in") {
-          // Send the OTP for sign-in
+          console.log(`Email: ${email}, sign-in OTP: ${otp}`);
         } else if (type === "email-verification") {
-          // Send the OTP for email verification
           console.log(`Email: ${email}, verification OTP: ${otp}`);
         } else {
-          // Send the OTP for password reset
+          console.log(`Email: ${email}, forgot password OTP: ${otp}`);
         }
       },
     }),
