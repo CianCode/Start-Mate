@@ -3,8 +3,6 @@
 <div align="center">
   <img src="./public/Banner.png" alt="StartMate Banner" width="100%" />
 
-# 🚀 StartMate
-
 **A modern, production-ready full-stack web application template**
 
 Built with Next.js 15, TypeScript, Tailwind CSS, Drizzle ORM, PostgreSQL, BetterAuth, and ShadCN UI
